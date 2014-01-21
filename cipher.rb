@@ -1,10 +1,10 @@
 class Cipher 
   def initialize(keystream)
     @keystream = keystream
-    @char_hash = Hash[(65..90).map { |i| [i.char, i] }] 
+    #below creates a hash of A-Z as keys and 65-90 as values 
+    @char_hash = Hash[(65..90).map { |i| [i.chr, i] }] 
   end
 
-# convert input into 5 char words
   def sanitize
     puts "Input string to be ciphered"
     string_array = gets.chomp.gsub!(/[^A-Za-z]+/,'').upcase!.scan(/.{1,5}/)
@@ -17,9 +17,9 @@ class Cipher
   end
 
   def process(s_arr)
-   keystream_num = convert_to_num(@keystream)
+   keystream_num_arr = convert_to_num(@keystream)
    input_num_arr = convert_to_num(s_arr)
-   
+   result = [input_num_arr, keystream_num_arr].transpose.map { |x| x.reduce(:+) % 26}
 
   end
 
